@@ -30,7 +30,7 @@ class LoginPage extends React.Component {
         let value = event.target.value;
         formData[element] = value;
         this.setState({ formData });
-        if (element == "email") {
+        if (element === "email") {
             if (!value) {
                 this.setState({ emailError: "Email is require" });
             } else {
@@ -40,7 +40,7 @@ class LoginPage extends React.Component {
                     this.setState({emailError: ''});
                 }
             }
-        } else if (element == 'password') {
+        } else if (element === 'password') {
             if (!value) {
                 this.setState({ passwordError: "Password is require" });
             } else {
@@ -54,24 +54,20 @@ class LoginPage extends React.Component {
     }
 
     handleLogin = (event) => {
-        if (this.state.emailError == '' && this.state.passwordError == '') {
+        if (this.state.emailError === '' && this.state.passwordError === '') {
             axios.post(`http://127.0.0.1:5000/api/login`, this.state.formData)
                 .then(res => {
-                    if (res.status == 200) {
+                    if (res.status === 200) {
                         res = res.data;
                         localStorage.setItem('authToken', res.data.authToken);
                         localStorage.setItem('user', JSON.stringify(res.data.user));
                         localStorage.setItem('isLogin', true);
                         window.location.assign('/dashboard');
-                    } else {
-                        if (res.data) {
-                            
-                        }
                     }
     
                 }).catch(err => {
-                    console.log("err", err);
-                    alert("Something goes wrong!")
+                    console.log(err.response.data);
+                    alert(err.response.data.message);
                 });
         }
         event.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import axios from 'axios';
 
 class DashboardPage extends React.Component {
@@ -42,7 +42,7 @@ class DashboardPage extends React.Component {
     render() {
         return (<div>
             <h1> User Info ({this.state.userType})</h1><button onClick={this.handleLogoutClick}>Logout</button>
-            {this.state.userType == 'User' ?
+            {this.state.userType === 'User' ?
                 (<div>
                     <h1>Welcome this is home page.</h1>
                     <label>{this.state.userData.email}</label>

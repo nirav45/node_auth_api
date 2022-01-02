@@ -2,8 +2,8 @@ const db = require('../conn');
 const User = db.users;
 const authConfig = require("../config/auth");
 const constant = require("../config/constant");
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 

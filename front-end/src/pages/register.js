@@ -25,7 +25,7 @@ class RegisterPage extends React.Component {
         let value = event.target.value;
         formData[element] = value;
         this.setState({ formData });
-        if (element == "email") {
+        if (element === "email") {
             if (!value) {
                 this.setState({ emailError: "Email is require" });
             } else {
@@ -35,7 +35,7 @@ class RegisterPage extends React.Component {
                     this.setState({emailError: ''});
                 }
             }
-        } else if (element == 'password') {
+        } else if (element === 'password') {
             if (!value) {
                 this.setState({ passwordError: "Password is require" });
             } else {
@@ -48,11 +48,11 @@ class RegisterPage extends React.Component {
         }
     }
 
-    handleLogin = (event) => {
-        console.log(this.state.formData);
+    handleSubmit = (event) => {
         axios.post(`http://127.0.0.1:5000/api/register`, this.state.formData)
             .then(res => {
-                if (res.status == 200) {
+                console.log("res", res);
+                if (res.status === 200) {
                     res = res.data;
                     localStorage.setItem('authToken', res.data.authToken);
                     localStorage.setItem('user', JSON.stringify(res.data.user));
@@ -60,12 +60,14 @@ class RegisterPage extends React.Component {
                     window.location.assign('/dashboard');
                 }
 
-            }).catch(err => console.log(err))
+            }).catch(err =>  {
+                alert(err.response.data.data.message);
+            })
         event.preventDefault();
     }
 
     render() {
-        return (<form onSubmit={this.handleLogin}>
+        return (<form onSubmit={this.handleSubmit}>
             <div>
                 <input type="text" required name="email" placeholder="Your Email" onChange={this.handleChange} />
             </div>
